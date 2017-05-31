@@ -1,6 +1,4 @@
-var prefixVendors=['moz','webkit'];
-var mainName='AnimationFrame';
-var top=global?global:window;
+var prefixVendors=['moz','webkit'],mainName='AnimationFrame',top=global?global:window;
 var raf=top['request'+mainName],_raf=raf,caf=top['cancel'+mainName]||top['cancelRequest'+mainName],_caf=caf;
 if(!raf){
   for(var i=0;i<prefixVendors.length;i++){

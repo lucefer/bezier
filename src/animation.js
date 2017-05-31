@@ -2,7 +2,20 @@ var bezier=require('./cubic-bezier')
 var raf=require('./raf')
 var Frame=require('./frame');
 var FPS=60,interval=1/FPS;
+
+/**
+ * [bezierAnimation 给定参数，返回动画对象]
+ * @method bezierAnimation
+ * @param  {[type]}        duration             [动画时长]
+ * @param  {[type]}        bezierTimingFunction [缓动函数]
+ * @param  {[type]}        handlers             [帧渲染时的回调]
+ * @param  {[type]}        delay                [动画延时]
+ * @return {[type]}                             [description]
+ */
 function bezierAnimation(duration,bezierTimingFunction,handlers,delay){
+  if(!this instanceof bezierAnimation){
+    return new bezierAnimation(duration,bezierTimingFunction,handlers,delay);
+  }
   var timingFunction=createBezier(bezierTimingFunction);
   var frameHandler;
   if (typeof handlers === 'function') {
@@ -11,25 +24,20 @@ function bezierAnimation(duration,bezierTimingFunction,handlers,delay){
         frameHandler=new Frame(handlers);
   }
   if(!delay)delay=0;
-  var isRunning=false;
-  var isDone=true;
-  var progress=0;
-  var startTime=0;
-  var passedTime=0;
-  var delayTimer=null;
+  var isRunning=false,isDone=true,progress=0,startTime=0,passedTime=0,delayTimer=null;
+
   this.play=function(){
     if(!startTime)startTime=Date.now();
     if(isRunning)return;
     if(isDone)isDone=false;
     isRunning=true;
+
     function playCurrFrame(){
       progress=(passedTime+Date.now()-startTime)/(duration*1000);
       if(progress>=1){
         progress=1;
       }
       frameHandler.execute(progress.toFixed(6),timingFunction.solve(progress).toFixed(6)).then(function(){
-        //frameIndex++;
-        //console.log(frameIndex++);
         playNext();
       })
     }
@@ -81,14 +89,11 @@ function bezierAnimation(duration,bezierTimingFunction,handlers,delay){
     endCb.push(cb);
   }
 }
-bezierAnimation.RUNNING="running"
-bezierAnimation.STOPPED="stopped"
-bezierAnimation.DONE="done";
 /**
  * [createBezier description]
  * @method createBezier
- * @param  {[type]}     cubicBezierTiming [形如"0.1，0.1，1，1"的字符串]
- * @return {[type]}                       [description]
+ * @param  {[type]}     cubicBezierTiming [数组或者字符串]
+ * @return {[type]}                       [返回对应的贝塞尔对象]
  */
 function createBezier(cubicBezierTiming){
   if(typeof cubicBezierTiming === 'string'){

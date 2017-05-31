@@ -10,4 +10,11 @@ module.exports={
     libraryTarget:'umd',
     library:'bezierAnimation'
   },
+  plugins:[
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
+  ]
 }

@@ -1,10 +1,9 @@
 var raf=require('./raf')
 function Frame(cb){
   this.execute=function(){
-    var args=arguments,isCanceled=false;
+    var args=arguments
     ///console.log("args",args);
     raf(function(){
-      if(isCanceled)return;
       for(var i=0,count=cb.length;i<count;i++){
         cb[i].apply(null,args);
       }
@@ -18,10 +17,6 @@ function Frame(cb){
   }
   this.then=function(cb){
     typeof cb ==='function' && (afterHandler=cb);
-
-  }
-  this.cancel=function(){
-    isCanceled=true;
   }
 }
 
