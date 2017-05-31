@@ -6,7 +6,7 @@
   "scripts": {
     "test": "webpack --config build/webpack.web-test.config.js",
     "demo": "webpack --config build/webpack.demo.config.js",
-    "publish": "webpack --config build/webpack.production.config.js"
+    "product": "webpack --config build/webpack.production.config.js"
   },
   "keywords": [
     "bezier",

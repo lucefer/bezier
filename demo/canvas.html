@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=750, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>canvas缓动应用</title>
+</head>
+<body>
+  <canvas id="canvas" width="750" height="1206"></canvas>
+
+  <script src="index.js"></script>
+  <script>
+      var ctx=canvas.getContext("2d");
+      ctx.fillStyle="blue";
+      function draw(x,y){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(x,y,6,0,2*Math.PI);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
+      var img=new Image();
+      img.src="./img/4.jpg";
+      function drawImg(scale){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.save();
+        //ctx.drawImage(img,0,0);
+        console.log("debug:",70*scale,1206*scale)
+        ctx.drawImage(img,0,0,750*scale,1206*scale);
+        ctx.restore();
+      }
+      var ani=new bezierAnimation(0.5,"ease",function(i1,i2){
+          //draw((400-0)*i2,(400-0)*i2);
+          console.log(i2)
+          drawImg(i2*1);
+      })
+  </script>
+</body>
+</html>
