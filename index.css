@@ -1,0 +1,29 @@
+html,body,div,section,article,h1,h2,h3,h4,h5,h6,ul,li,ol,span,p,em,i,b{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
+ul,ol{
+  list-style: none;
+}
+.floor-01{
+  background-color: #5CB85C; /* fallback color if gradients are not supported */
+  /*background-image: -webkit-linear-gradient(top, #c7cdc1, #828773); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
+  /*background-image:    -moz-linear-gradient(top, #c7cdc1, #828773); /* For Firefox (3.6 to 15) */
+  /*background-image:      -o-linear-gradient(top, #c7cdc1, #828773); /* For old Opera (11.1 to 12.0) */
+  /*background-image:         linear-gradient(to bottom, #c7cdc1, #828773); /* Standard syntax; must be last */
+
+  text-align: center;
+  color: #FFF;
+}
+.main{
+  margin-top: 80px;
+}
+.main h1{
+  font-size: 80px;
+  line-height: 1;
+  color: #FFF;
+}
+.floor-01 li{
+  display: inline-block;
+}
