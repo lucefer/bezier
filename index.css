@@ -8,6 +8,10 @@ html, body, div, section, article, h1, h2, h3, h4, h5, h6, ul, li, ol, span, p, 
 ul, ol {
     list-style: none;
 }
+a{
+  text-decoration: none;
+  color: #999;
+}
 html, body {
     height: 100%;
     font-family: "Microsoft YaHei", 微软雅黑, STXihei, 华文细黑, Georgia, "Times New Roman", Arial, sans-serif;
@@ -90,8 +94,11 @@ html, body {
 .floor-01 li {
     display: inline-block;
     padding: 0 20px;
-    border-right: 1px solid #FFF;
+    border-right: 1px solid rgba(255,255,255,.3);
     cursor: pointer;
+}
+.floor-01 li a{
+  color: #FFF;
 }
 .floor-01 ul li:last-child {
     border-right: 0;
@@ -156,6 +163,7 @@ html, body {
     margin-bottom: 40px;
     position: relative;
     padding-left: 60px;
+    padding-right:20px;
 }
 .floor-02 li:before{
   font-size: 28px;
