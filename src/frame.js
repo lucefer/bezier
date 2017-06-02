@@ -1,11 +1,14 @@
 var raf=require('./raf')
 function Frame(cb){
-  this.execute=function(){
-    var args=arguments
+  this.execute=function(param,timingFunction){
     ///console.log("args",args);
     raf(function(){
+      param.progress=(param.passedTime+Date.now()-param.startTime)/(param.duration*1000);
+      if(param.progress>=1){
+        param.progress=1;
+      }
       for(var i=0,count=cb.length;i<count;i++){
-        cb[i].apply(null,args);
+        cb[i].call(null,param.progress.toFixed(6),timingFunction.solve(param.progress).toFixed(6));
       }
       frameOver();
     })

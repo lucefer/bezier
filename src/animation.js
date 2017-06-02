@@ -24,29 +24,41 @@ function bezierAnimation(duration,bezierTimingFunction,handlers,delay){
         frameHandler=new Frame(handlers);
   }
   if(!delay)delay=0;
-  var isRunning=false,isDone=true,progress=0,startTime=0,passedTime=0,delayTimer=null;
-
+  var isRunning=false,isDone=true,delayTimer=null;
+  var param={
+    startTime:0,
+    passedTime:0,
+    duration:duration,
+    progress:0
+  }
   this.play=function(){
-    if(!startTime)startTime=Date.now();
+    if(!param.startTime)param.startTime=Date.now();
     if(isRunning)return;
     if(isDone)isDone=false;
     isRunning=true;
 
     function playCurrFrame(){
+      /*
       progress=(passedTime+Date.now()-startTime)/(duration*1000);
       if(progress>=1){
         progress=1;
       }
+      */
+      frameHandler.execute(param,timingFunction).then(function(){
+        playNext();
+      })
+      /*
       frameHandler.execute(progress.toFixed(6),timingFunction.solve(progress).toFixed(6)).then(function(){
         playNext();
       })
+      */
     }
     function done(){
       isRunning=false;
       isDone=true;
-      passedTime=0;
-      startTime=0;
-      progress=0;
+      param.passedTime=0;
+      param.startTime=0;
+      param.progress=0;
       delayTimer=null;
       for(var i=0,count=endCb.length;i<count;i++){
         endCb[i]();
@@ -54,7 +66,7 @@ function bezierAnimation(duration,bezierTimingFunction,handlers,delay){
     }
     function playNext(){
       if(!isRunning)return;
-      if(progress>=1){
+      if(param.progress>=1){
         done();
       }else {
         playCurrFrame();
@@ -64,15 +76,15 @@ function bezierAnimation(duration,bezierTimingFunction,handlers,delay){
       playCurrFrame();
     }else{
       if(!delayTimer){
-        delayTimer=setTimeout(function(){startTime=Date.now();playCurrFrame();},delay*1000);
+        delayTimer=setTimeout(function(){param.startTime=Date.now();playCurrFrame();},delay*1000);
       }else{
         playCurrFrame();
       }
     }
   }
   this.stop=function(){
-  passedTime=Date.now()-startTime;
-  startTime=0;
+  param.passedTime=Date.now()-param.startTime;
+  param.startTime=0;
     isRunning=false;
   }
   this.isRunning=function(){

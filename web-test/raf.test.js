@@ -1015,15 +1015,12 @@ module.exports = function (assertion, object, includeAll) {
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {var prefixVendors=['moz','webkit'];
-var eventName='AnimationFrame';
-var top=global?global:window;
-var raf=top['request'+eventName],_raf=raf,caf=top['cancel'+eventName]||top['cancelRequest'+eventName],_caf=caf;
-
+/* WEBPACK VAR INJECTION */(function(global) {var prefixVendors=['moz','webkit'],mainName='AnimationFrame',top=global?global:window;
+var raf=top['request'+mainName],_raf=raf,caf=top['cancel'+mainName]||top['cancelRequest'+mainName],_caf=caf;
 if(!raf){
   for(var i=0;i<prefixVendors.length;i++){
-    raf=top[prefixVendors[i]+'Request'+eventName];
-    caf=top[prefixVendors[i]+'Cancel'+eventName] || top[prefixVendors+'CancelRequest'+eventName];
+    raf=top[prefixVendors[i]+'Request'+mainName];
+    caf=top[prefixVendors[i]+'Cancel'+mainName] || top[prefixVendors+'CancelRequest'+mainName];
   }
 }
 
@@ -1032,15 +1029,12 @@ if(!raf||!caf){
   frameInterval=1000 / 60;
   raf=function(callback){
     if(handlerQuene.length == 0){
-
       var n=Date.now(),
       e=Math.max(0,frameInterval-n+l);
       var next=l==0?Math.round(frameInterval):Math.round(e);
       l=n+Math.round(e);
-      //console.log("next",next);
       setTimeout(function(){
         var c=handlerQuene.slice(0);
-        //console.log(c);
         (handlerQuene.length>0) && (handlerQuene=[]);
         for(var i=0,count=c.length;i<count;i++){
             try{
