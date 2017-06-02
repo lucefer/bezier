@@ -158,12 +158,16 @@ html, body {
 }
 .floor-02 ul li {
     color: #6f5499;
-    width: 50%;
     float: left;
     margin-bottom: 40px;
     position: relative;
     padding-left: 60px;
     padding-right:20px;
+}
+@media (min-width: 768px){
+  .floor-02 ul li{
+    width: 50%;
+  }
 }
 .floor-02 li:before{
   font-size: 28px;
