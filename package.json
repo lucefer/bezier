@@ -1,6 +1,6 @@
 {
   "name": "bezier-animation",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a library for frame-by-frame animation along cubic-bezier-timing",
   "main": "./dist/bezier-animation.js",
   "scripts": {
