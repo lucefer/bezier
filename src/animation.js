@@ -43,7 +43,7 @@ function bezierAnimation(duration,bezierTimingFunction,handlers,delay,playNum){
   }
   this.play=function(){
     if(!param.startTime)param.startTime=Date.now();
-    if(isRunning && playCount ==0)return;
+    if(isRunning && playCount ==0)return this;
     if(isDone)isDone=false;
     isRunning=true;
 
@@ -110,6 +110,7 @@ function bezierAnimation(duration,bezierTimingFunction,handlers,delay,playNum){
         playCurrFrame();
       }
     }
+    return this;
   }
   this.stop=function(){
   param.passedTime=Date.now()-param.startTime;
@@ -128,6 +129,7 @@ function bezierAnimation(duration,bezierTimingFunction,handlers,delay,playNum){
   var endCb=[];
   this.end=function(cb){
     endCb.push(cb);
+    return this
   }
 }
 /**
