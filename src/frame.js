@@ -3,7 +3,8 @@ function Frame(cb){
   this.execute=function(param,timingFunction){
     ///console.log("args",args);
     raf(function(){
-      param.progress=(param.passedTime+Date.now()-param.startTime)/(param.duration*1000);
+
+      param.progress=(param.passedTime+Date.now()-(!param.startTime?Date.now():param.startTime))/(param.duration*1000);
       if(param.progress>=1){
         param.progress=1;
       }

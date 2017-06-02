@@ -240,7 +240,8 @@ function Frame(cb){
   this.execute=function(param,timingFunction){
     ///console.log("args",args);
     raf(function(){
-      param.progress=(param.passedTime+Date.now()-param.startTime)/(param.duration*1000);
+
+      param.progress=(param.passedTime+Date.now()-(!param.startTime?Date.now():param.startTime))/(param.duration*1000);
       if(param.progress>=1){
         param.progress=1;
       }
@@ -308,19 +309,29 @@ var FPS=60,interval=1/FPS;
  * @param  {[type]}        delay                [动画延时]
  * @return {[type]}                             [description]
  */
-function bezierAnimation(duration,bezierTimingFunction,handlers,delay){
+function bezierAnimation(duration,bezierTimingFunction,handlers,delay,playNum){
   if(!this instanceof bezierAnimation){
     return new bezierAnimation(duration,bezierTimingFunction,handlers,delay);
   }
   var timingFunction=createBezier(bezierTimingFunction);
-  var frameHandler;
+  var frameHandler,infinite=false;
   if (typeof handlers === 'function') {
     frameHandler=new Frame([handlers]);
   } else if (Object.prototype.toString.call(handlers) === '[object Array]'){
         frameHandler=new Frame(handlers);
   }
   if(!delay)delay=0;
-  var isRunning=false,isDone=true,delayTimer=null;
+  if(/^[1-9]\d+$/.test(playNum)){
+    playNum=parseInt(playNum);
+    infinite=false;
+  }else if(!playNum){
+    playNum=1;
+    infinite=false;
+  }else if(playNum==='infinite'){
+    playCount=1;
+  }
+
+  var isRunning=false,isDone=true,delayTimer=null,playCount=playNum;
   var param={
     startTime:0,
     passedTime:0,
@@ -329,7 +340,7 @@ function bezierAnimation(duration,bezierTimingFunction,handlers,delay){
   }
   this.play=function(){
     if(!param.startTime)param.startTime=Date.now();
-    if(isRunning)return;
+    if(isRunning && playCount ==0)return;
     if(isDone)isDone=false;
     isRunning=true;
 
@@ -355,15 +366,35 @@ function bezierAnimation(duration,bezierTimingFunction,handlers,delay){
       param.passedTime=0;
       param.startTime=0;
       param.progress=0;
+      playCount=playNum;
       delayTimer=null;
       for(var i=0,count=endCb.length;i<count;i++){
         endCb[i]();
       }
+
+    }
+    var self=this;
+    function reset(){
+      //delayTimer=null;
+      param.startTime=0;
+      param.progress=0;
     }
     function playNext(){
       if(!isRunning)return;
       if(param.progress>=1){
-        done();
+        if(playNum !== 'infinite'){
+          playCount--;
+          if(playCount>0){
+            reset();
+            self.play();
+          }else{
+            done();
+          }
+        }else{
+          reset();
+          self.play();
+        }
+
       }else {
         playCurrFrame();
       }

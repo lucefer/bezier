@@ -35,7 +35,7 @@
   var ani;
   ani  =new bezierAnimation(5,[0.25,1,0.25,1],function(i1,i2){
       ball.style.transform="translateX("+i2*(end-start)+"px)";
-    },1);ani.end(function(){
+    },0);ani.end(function(){
       //ball.style.transform="translateX(0)";
     });
     startBtn.addEventListener("click",function(){
