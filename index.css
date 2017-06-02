@@ -10,6 +10,34 @@ ul, ol {
 }
 html, body {
     height: 100%;
+    font-family: "Microsoft YaHei", 微软雅黑, STXihei, 华文细黑, Georgia, "Times New Roman", Arial, sans-serif;
+    -webkit-font-smoothing:antialiased
+}
+@font-face {
+    font-family: 'icomoon';
+    src: url('fonts/icomoon.eot?d1rq8c');
+    src: url('fonts/icomoon.eot?d1rq8c#iefix') format('embedded-opentype'), url('fonts/icomoon.ttf?d1rq8c') format('truetype'), url('fonts/icomoon.woff?d1rq8c') format('woff'), url('fonts/icomoon.svg?d1rq8c#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.icon-down:before {
+    content: "\ea50";
+}
+.icon-item:before {
+    content: "\eaae";
 }
 .floor-01 {
     position: relative;
@@ -44,39 +72,108 @@ html, body {
     margin-bottom: 40px;
     text-shadow: 0 10px 0 rgba(0, 0, 0, .5);
 }
-
 .main p {
     font-size: 32px;
 }
-.main a{
-  display: inline-block;
-  margin-top: 40px;
-  font-size: 20px;
-  width: 100px;
-  padding:10px 14px;
-  text-decoration: none;
-  background-color: #fff;
-  color: #6f5499;
-  text-align: center;
-  border-radius: 4px;
+.main a {
+    display: inline-block;
+    margin-top: 40px;
+    font-size: 20px;
+    width: 100px;
+    padding: 10px 14px;
+    text-decoration: none;
+    background-color: #fff;
+    color: #6f5499;
+    text-align: center;
+    border-radius: 4px;
 }
 .floor-01 li {
     display: inline-block;
-    padding:0 20px;
+    padding: 0 20px;
     border-right: 1px solid #FFF;
-    cursor:pointer;
+    cursor: pointer;
 }
-.floor-01 ul li:last-child{
-  border-right: 0;
+.floor-01 ul li:last-child {
+    border-right: 0;
 }
-.floor-02{
-  padding: 100px 60px 60px 60px;
+.floor-01 .icon-down {
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    font-size: 32px;
+    left: 0;
+    color: #EEE;
 }
-.floor-02 ul{
-  overflow: hidden;
+-webkit-keyframes fadeOutDown {
+    0% {
+        opacity: 1
+    }
+    100% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 100%, 0) rotate(180deg)
+        transform: translate3d(0, 100%, 0) rotate(180deg)
+    }
 }
-.floor-02 ul li{
+@keyframes fadeOutDown {
+    0% {
+        opacity: 1
+    }
+    100% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 100%, 0) rotate(180deg);
+        transform: translate3d(0, 100%, 0) rotate(180deg)
+    }
+}
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both
+}
+.animated.infinite {
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite
+}
+.fadeOutDown {
+    -webkit-animation-name: fadeOutDown;
+    animation-name: fadeOutDown
+}
+.floor-02 {
+    padding: 100px 60px 60px 60px;
+    background: #FAFAFA;
+}
+.floor-02 ul {
+    overflow: hidden;
+}
+.floor-02 ul li {
+    color: #6f5499;
+    width: 50%;
+    float: left;
+    margin-bottom: 40px;
+    position: relative;
+    padding-left: 60px;
+}
+.floor-02 li:before{
+  font-size: 28px;
+  position: absolute;
+  left: 10px;
+  top: 0;
+}
+.floor-02 em{
+  display: block;
+  font-style: normal;
+  font-size: 20px;
+  color: rgb(51,51,51);
+  margin-bottom:8px;
+  font-weight: bold;
   color: #6f5499;
-  width: 50%;
-  float: left;
+}
+.floor-02 p{
+  font-size: 14px;
+  color: #999;
+  line-height: 1.5;
 }

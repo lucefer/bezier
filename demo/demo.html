@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>对比transition</title>
+  <style type="text/css">
+  .ball{
+    width: 50px;
+    height:50px;
+    border-radius:100%;
+    background-color:pink;
+  }
+  #cssBall{
+    transition:5s cubic-bezier(0.25,1,0.25,1) 1s;
+    transform:translateX(0);
+  }
+  #cssBall.ani{
+    transform:translateX(200px);
+  }
+  </style>
+</head>
+<body>
+  <div>
+    <div class="ball" id="ball"></div>
+  </div>
+  <div>
+    <div class="ball" id="cssBall"></div>
+  </div>
+  <button id="startBtn">开始</button>
+  <button id="pauseBtn">暂停</button>
+  <script src="../dist/bezier-animation.js"></script>
+  <script>
+  var ani;
+  ani  =new bezierAnimation(5,[0.25,1,0.25,1],function(i1,i2){
+      ball.style.transform="translateX("+i2*(end-start)+"px)";
+    },1);ani.end(function(){
+      //ball.style.transform="translateX(0)";
+    });
+    startBtn.addEventListener("click",function(){
+      cssBall.className="ball ";
+      cssBall.className="ball ani";
+      ani.play();
+    })
+    pauseBtn.addEventListener("click",function(){
+      ani.stop();
+    })
+    var start=0;
+    var end=200;
+
+  </script>
+</body>
+</html>
