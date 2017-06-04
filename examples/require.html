@@ -11,6 +11,7 @@
     color: #FFF;
   }
   .ball{
+    display: inline-block;
     width: 50px;
     height:50px;
     border-radius:100%;
@@ -28,12 +29,22 @@
 </head>
 <body>
   <div class="floor-01">
-    <div class="ball" id="ball"></div>
-    <div class="ball" id="cssBall"></div>
-
-
+    <div class="exam">
+      <h3>小球向右移动200像素,并逐渐变透明</h3>
+      <div class="bezier">
+    <span>bezier动画：</span><div class="ball" id="ball"></div>
+  </div><div class="css3">
+    <span>css3动画：</span><div class="ball" id="cssBall"></div>
+  </div>
   <button id="startBtn">开始</button>
   <button id="pauseBtn">暂停</button>
+</div>
+<div class="exam">
+  <h3>小球逐渐变透明</h3>
+<div class="ball" id="ball1"></div>
+<div class="ball" id="cssBall1"></div>
+</div>
+
   </div>
   <script src="./require.js"></script>
   <script>
@@ -43,27 +54,29 @@
           bezier: 'https://lucefer.github.io/bezier/dist/bezier-animation'
       }
   })
-  // 加载 Mock
+  // 加载 bezier
   require(['bezier'], function(bezier){
       // 使用 bezier
+      var start=0,end=300;
       var animation= new bezier(5,[0.25,1,0.25,1],function(i1,i2){
           ball.style.transform="translateX("+i2*(end-start)+"px)";
+          ball.style.opacity=""+(1-i2);
         },0).end(function(){
 
         });
         startBtn.addEventListener("click",function(){
+
           cssBall.className="ball ";
           cssBall.offsetWidth;
           cssBall.className="ball ani";
           animation.play();
+          console.log(animation.isStopped());
+
         })
         pauseBtn.addEventListener("click",function(){
           animation.stop();
         })
-        var start=0;
-        var end=300;
 
-      animation.play();
   })
   </script>
   <script>
