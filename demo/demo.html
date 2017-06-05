@@ -1,54 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>对比transition</title>
-  <style type="text/css">
-  .ball{
-    width: 50px;
-    height:50px;
-    border-radius:100%;
-    background-color:pink;
-  }
-  #cssBall{
-    transition:5s cubic-bezier(0.25,1,0.25,1) 1s;
-    transform:translateX(0);
-  }
-  #cssBall.ani{
-    transform:translateX(200px);
-  }
-  </style>
-</head>
-<body>
-  <div>
-    <div class="ball" id="ball"></div>
-  </div>
-  <div>
-    <div class="ball" id="cssBall"></div>
-  </div>
-  <button id="startBtn">开始</button>
-  <button id="pauseBtn">暂停</button>
-  <script src="../dist/bezier-animation.js"></script>
-  <script>
-  var ani;
-  ani  =new bezierAnimation(5,[0.25,1,0.25,1],function(i1,i2){
-      ball.style.transform="translateX("+i2*(end-start)+"px)";
-    },1);ani.end(function(){
-      //ball.style.transform="translateX(0)";
-    });
-    startBtn.addEventListener("click",function(){
-      cssBall.className="ball ";
-      cssBall.className="ball ani";
-      ani.play();
-    })
-    pauseBtn.addEventListener("click",function(){
-      ani.stop();
-    })
-    var start=0;
-    var end=200;
 
-  </script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>bezierjs demo</title>
+    <link rel="stylesheet" type="text/css" href="../index.css" />
+    <style type="text/css">
+        body {
+            color: #FFF;
+        }
+        .exam h3 {
+            margin-bottom: 30px;
+        }
+        .exam {
+            position: absolute;
+            top:40%;
+            left: 50%;
+            width:580px;
+            transform: translate(-50%,-50%);
+            -webkit-transform: translate(-50%,-50%);
+            -moz-transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+            -o-transform: translate(-50%,-50%);
+        }
+
+        .ball {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+            background-color: #FFF;
+        }
+
+        #cssBall {
+            transition: 5s cubic-bezier(0.25, 1, 0.25, 1);
+            transform: translateX(0);
+        }
+
+        .label {
+            width: 100px;
+            float: left;
+            height: 40px;
+            line-height: 40px;
+            text-align: right;
+        }
+
+        .animation {
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        .css3{
+          margin-bottom: 30px;
+        }
+        .animation>div {
+            margin-left: 120px;
+            text-align: left;
+        }
+
+        #cssBall.ani {
+            transform: translateX(300px);
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="floor-01">
+        <div class="exam">
+            <h3>小球向右移动200像素,并逐渐变透明</h3>
+            <div class="bezier animation">
+                <span class="label">bezier动画：</span>
+                <div>
+                    <div class="ball" id="ball"></div>
+                </div>
+            </div>
+            <div class="css3 animation">
+                <span class="label">css3动画：</span>
+                <div>
+                    <div class="ball" id="cssBall"></div>
+                </div>
+            </div>
+            <button id="startBtn">开始</button>
+            <button id="pauseBtn">暂停</button>
+        </div>
+        <p id="hint"></p>
+    </div>
+    <script src="./require.js"></script>
+    <script>
+        // 配置 bezier 路径
+        require.config({
+            paths: {
+                //bezier: 'https://lucefer.github.io/bezier/dist/bezier-animation'
+                bezier: '../dist/bezier-animation'
+            }
+        })
+        // 加载 bezier
+        require(['bezier'], function(bezier) {
+            // 使用 bezier
+            var start = 0,
+                end = 300;
+            var animation = new bezier(5, [0.25, 1, 0.25, 1], function(i1, i2) {
+                ball.style.transform = "translateX(" + i2 * (end - start) + "px)";
+                ball.style.opacity = "" + (1 - i2);
+                hint.innerHTML=animation.getStatus()+"..."
+            }, 0).end(function() {
+                ball.style.transform = "";
+                ball.style.opacity = "1";
+                hint.innerHTML=animation.getStatus()+"..."
+            });
+            cssBall.addEventListener("transitionend", function done() {
+                this.className = "ball";
+                this.style.transition = "none";
+                this.style.opacity = 1;
+            })
+            startBtn.addEventListener("click", function() {
+                cssBall.className = "ball ani";
+                this.style.visibility = "";
+                cssBall.style.cssText = "";
+                animation.play();
+            })
+            pauseBtn.addEventListener("click", function() {
+                animation.stop();
+                hint.innerHTML=animation.getStatus()+"..."
+            })
+        })
+    </script>
 </body>
 </html>
