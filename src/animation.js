@@ -157,6 +157,7 @@ function bezierAnimation(duration, bezierTimingFunction, handlers, delay, playNu
 function createBezier(cubicBezierTiming) {
     if (typeof cubicBezierTiming === 'string') {
         console.log(bezier[cubicBezierTiming]);
+        window[cubicBezierTiming]=bezier[cubicBezierTiming];
         if (bezier[cubicBezierTiming]) {
             return bezier[cubicBezierTiming];
         }
