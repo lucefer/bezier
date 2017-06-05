@@ -156,6 +156,7 @@ function bezierAnimation(duration, bezierTimingFunction, handlers, delay, playNu
  */
 function createBezier(cubicBezierTiming) {
     if (typeof cubicBezierTiming === 'string') {
+        console.log(bezier[cubicBezierTiming]);
         if (bezier[cubicBezierTiming]) {
             return bezier[cubicBezierTiming];
         }
@@ -167,6 +168,7 @@ function createBezier(cubicBezierTiming) {
     } else if (typeof cubicBezierTiming === 'function' && cubicBezierTiming instanceof bezier) {
         return cubicBezierTiming;
     }
+
 
 }
 module.exports = bezierAnimation;
