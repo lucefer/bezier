@@ -340,7 +340,8 @@ function bezierAnimation(duration,bezierTimingFunction,handlers,delay,playNum){
   }
   this.play=function(){
     if(!param.startTime)param.startTime=Date.now();
-    if(isRunning && playCount ==0)return;
+    if(isRunning)return this;
+    console.log("重新开始");
     if(isDone)isDone=false;
     isRunning=true;
 
@@ -375,7 +376,6 @@ function bezierAnimation(duration,bezierTimingFunction,handlers,delay,playNum){
     }
     var self=this;
     function reset(){
-      //delayTimer=null;
       param.startTime=0;
       param.progress=0;
     }
@@ -408,6 +408,7 @@ function bezierAnimation(duration,bezierTimingFunction,handlers,delay,playNum){
         playCurrFrame();
       }
     }
+    return this;
   }
   this.stop=function(){
   param.passedTime=Date.now()-param.startTime;
@@ -426,6 +427,7 @@ function bezierAnimation(duration,bezierTimingFunction,handlers,delay,playNum){
   var endCb=[];
   this.end=function(cb){
     endCb.push(cb);
+    return this
   }
 }
 /**
