@@ -1,8 +1,9 @@
 var raf=require('./raf')
 function Frame(cb){
+  var timer=null;
   this.execute=function(param,timingFunction){
     ///console.log("args",args);
-    raf(function(){
+    timer=raf(function(){
 
       param.progress=(param.passedTime+Date.now()-(!param.startTime?Date.now():param.startTime))/(param.duration*1000);
       if(param.progress>=1){
@@ -18,6 +19,9 @@ function Frame(cb){
   var afterHandler;
   function frameOver(fun){
     afterHandler();
+  }
+  this.cancelRaf=function(){
+    raf.cancel(timer)
   }
   this.then=function(cb){
     typeof cb ==='function' && (afterHandler=cb);
