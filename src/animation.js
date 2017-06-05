@@ -2,7 +2,12 @@ var bezier = require('./cubic-bezier')
 var raf = require('./raf')
 var Frame = require('./frame');
 var FPS = 60,
-    interval = 1 / FPS;
+    interval = 1 / FPS,
+    status={
+      RUNNING:"RUNNING",
+      PAUSING:"PAUSING",
+      OVER:"OVER"
+    }
 
 /**
  * [bezierAnimation 给定参数，返回动画对象]
@@ -141,12 +146,12 @@ function bezierAnimation(duration, bezierTimingFunction, handlers, delay, playNu
     }
     this.getStatus = function() {
         if (isRunning) {
-            return "running"
+            return status.RUNNING
         } else {
             if (isDone) {
-                return "over"
+                return status.OVER
             } else {
-                return "pausing"
+                return status.PAUSING
             }
         }
     }
