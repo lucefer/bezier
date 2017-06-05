@@ -5,14 +5,74 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title></title>
+  <style type="text/css">
+  body{
+    background: #000;
+    color: #FFF;
+  }
+  .code{
+    white-space: pre;
+  }
+  </style>
+  <script src="../dist/bezier-animation.js"></script>
 </head>
 <body>
 <div>
-  <h3>实现这样一个动画</h3>
+  <h3>想象一下，实现这样一个动画，3秒内向右匀速移动200px。</h3>
   <div>
     <h5>css3需要这么写</h5>
-    <div>
+    <div class="code">
+      .ball{
+        width:50px;
+        height:50px;
+        transtion:3s;
+      }
+      .ball.ani{
+        transform:translateX(200px);
+      }
     </div>
+    <style type="text/css">
+    .ball{
+      width:50px;
+      height:50px;
+      transition:3s;
+      background: #fff;
+      border-radius: 100%;
+    }
+    .ball.ani{
+      transform:translateX(200px);
+    }
+    </style>
+    <div class="ball" id="ball010"></div>
+    <script>
+      setTimeout(function(){
+        ball010.className="ball ani";
+      })
+    </script>
+  </div>
+  <div>
+    <h5>bezierjs需要这么写</h5>
+    <div class="code">
+      var animation=new bezierAnimation(3,"linear",function(i1,i2){
+        ball1.style.transform="translateX("+i2*200+")";
+      })
+      animation.play();
+    </div>
+    <style type="text/css">
+    .ball{
+      width:50px;
+      height:50px;
+      background: #fff;
+      border-radius: 100%;
+    }
+    </style>
+    <div class="ball" id="ball011"></div>
+    <script>
+    var animation=new bezierAnimation(3,"ease",function(i1,i2){
+      ball011.style.transform="translateX("+i2*200+"px)";
+    })
+    animation.play();
+    </script>
   </div>
 </div>
 </body>
