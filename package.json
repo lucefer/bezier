@@ -20,6 +20,8 @@
   "license": "MIT",
   "devDependencies": {
     "html-webpack-plugin": "^2.28.0",
-    "webpack": "^2.0.0"
+    "webpack": "^2.0.0",
+    "chai":"^3.5.0",
+    "mocha":"^3.4.1"
   }
 }
