@@ -7,7 +7,8 @@
     "test": "webpack --config build/webpack.web-test.config.js",
     "demo": "webpack --config build/webpack.demo.config.js",
     "product": "webpack --config build/webpack.production.config.js",
-    "ci":"npm run product && npm run test && mocha"
+    "mocha": "./node_modules/.bin/mocha -u bdd 'test/**/*.js'",
+    "ci":"npm run product && npm run test && npm run mocha"
   },
   "keywords": [
     "bezier",
