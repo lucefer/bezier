@@ -11,6 +11,20 @@
         body {
             color: #FFF;
         }
+        .exam h3 {
+            margin-bottom: 30px;
+        }
+        .exam {
+            position: absolute;
+            top:50%;
+            left: 50%;
+            width:580px;
+            transform: translate(-50%,-50%);
+            -webkit-transform: translate(-50%,-50%);
+            -moz-transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+            -o-transform: translate(-50%,-50%);
+        }
 
         .ball {
             display: inline-block;
@@ -35,8 +49,11 @@
 
         .animation {
             overflow: hidden;
+            margin-top: 20px;
         }
-
+        .css3{
+          margin-bottom: 30px;
+        }
         .animation>div {
             margin-left: 120px;
             text-align: left;
@@ -68,12 +85,7 @@
             <button id="startBtn">开始</button>
             <button id="pauseBtn">暂停</button>
         </div>
-        <div class="exam">
-            <h3>小球逐渐变透明</h3>
-            <div class="ball" id="ball1"></div>
-            <div class="ball" id="cssBall1"></div>
-        </div>
-
+        <p id="hint"></p>
     </div>
     <script src="./require.js"></script>
     <script>
@@ -91,28 +103,30 @@
                 end = 300;
             var animation = new bezier(5, [0.25, 1, 0.25, 1], function(i1, i2) {
                 ball.style.transform = "translateX(" + i2 * (end - start) + "px)";
-                ball.style.opacity = "" + (1-i2);
+                ball.style.opacity = "" + (1 - i2);
+                hint.innerHTML=animation.getStatus()+"..."
             }, 0).end(function() {
-
+                ball.style.transform = "";
+                ball.style.opacity = "1";
+                hint.innerHTML=animation.getStatus()+"..."
             });
+            cssBall.addEventListener("transitionend", function done() {
+                this.className = "ball";
+                this.style.transition = "none";
+                this.style.opacity = 1;
+            })
             startBtn.addEventListener("click", function() {
-                cssBall.className = "ball";
-                cssBall.offsetWidth;
                 cssBall.className = "ball ani";
+                this.style.visibility = "";
+                cssBall.style.cssText = "";
                 animation.play();
                 console.log(animation.isStopped());
             })
             pauseBtn.addEventListener("click", function() {
                 animation.stop();
+                hint.innerHTML=animation.getStatus()+"..."
             })
         })
     </script>
-    <script>
-        var ani;
-        /*
-  ani  =
-*/
-    </script>
 </body>
-
 </html>
