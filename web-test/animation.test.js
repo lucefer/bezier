@@ -8792,18 +8792,12 @@ describe('动画引擎测试',function(){
       var animation=new Animation(0.5,'linear',function(i1,i2){
       })
       animation.play()
-      expect(animation.isRunning()).to.be.true
-      expect(animation.isDone()).to.be.false
-      expect(animation.isStopped()).to.be.false
+      expect(animation.getStatus()==='RUNNING').to.be.true
       animation.stop()
-      expect(animation.isRunning()).to.be.false
-      expect(animation.isDone()).to.be.false
-      expect(animation.isStopped()).to.be.true
+      expect(animation.getStatus()==='PAUSING').to.be.true
       animation.play()
       animation.end(function(){
-        expect(animation.isDone()).to.be.true
-        expect(animation.isStopped()).to.be.false
-        expect(animation.isRunning()).to.be.false
+        expect(animation.getStatus()==='OVER').to.be.true
         done()
       })
     });
