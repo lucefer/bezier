@@ -134,19 +134,21 @@ function bezierAnimation(duration, bezierTimingFunction, handlers, delay, playNu
         return this;
     }
     this.stop = function() {
-        if(!isRunning)return this;
-        param.passedTime = param.passedTime+(Date.now() - param.startTime);
+        if (!isRunning) return this;
+        param.passedTime = param.passedTime + (Date.now() - param.startTime);
         param.startTime = 0;
         isRunning = false;
     }
-    this.isRunning = function() {
-        return isRunning;
-    }
-    this.isDone = function() {
-        return isDone;
-    }
-    this.isStopped = function() {
-        return !isDone && !isRunning
+    this.getStatus = function() {
+        if (isRunning) {
+            return "running"
+        } else {
+            if (isDone) {
+                return "over"
+            } else {
+                return "pausing"
+            }
+        }
     }
     var endCb = [];
     this.end = function(cb) {
