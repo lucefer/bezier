@@ -134,6 +134,7 @@ function bezierAnimation(duration, bezierTimingFunction, handlers, delay, playNu
         return this;
     }
     this.stop = function() {
+        if(!isRunning)return this;
         param.passedTime = Date.now() - param.startTime;
         param.startTime = 0;
         isRunning = false;
