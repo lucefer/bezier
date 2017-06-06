@@ -2,9 +2,7 @@ var raf=require('./raf')
 function Frame(cb){
   var timer=null;
   this.execute=function(param,timingFunction){
-    ///console.log("args",args);
     timer=raf(function(){
-
       param.progress=(param.passedTime+Date.now()-(!param.startTime?Date.now():param.startTime))/(param.duration*1000);
       if(param.progress>=1){
         param.progress=1;
