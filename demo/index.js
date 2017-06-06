@@ -237,11 +237,11 @@ module.exports = CubicBezier;
 
 var raf=__webpack_require__(0)
 function Frame(cb){
+  var timer=null;
   this.execute=function(param,timingFunction){
-    ///console.log("args",args);
-    raf(function(){
-
+    timer=raf(function(){
       param.progress=(param.passedTime+Date.now()-(!param.startTime?Date.now():param.startTime))/(param.duration*1000);
+      delta=0;
       if(param.progress>=1){
         param.progress=1;
       }
@@ -255,6 +255,9 @@ function Frame(cb){
   var afterHandler;
   function frameOver(fun){
     afterHandler();
+  }
+  this.cancelRaf=function(){
+    raf.cancel(timer)
   }
   this.then=function(cb){
     typeof cb ==='function' && (afterHandler=cb);
@@ -309,11 +312,12 @@ var FPS = 60,
 /**
  * [bezierAnimation 给定参数，返回动画对象]
  * @method bezierAnimation
- * @param  {[type]}        duration             [动画时长]
- * @param  {[type]}        bezierTimingFunction [缓动函数]
- * @param  {[type]}        handlers             [帧渲染时的回调]
- * @param  {[type]}        delay                [动画延时]
- * @return {[type]}                             [description]
+ * @param  {[number]}        duration             [动画时长]
+ * @param  {[string|array]}        bezierTimingFunction [缓动函数]
+ * @param  {[function|Array[function]]}        handlers             [帧渲染时的回调]
+ * @param  {[number]}        delay                [动画延时]
+ * @param  {[number|string]}        playNum                [播放次数]
+ * @return {[object]}                             [description]
  */
 function bezierAnimation(duration, bezierTimingFunction, handlers, delay, playNum) {
     if (!this instanceof bezierAnimation) {
@@ -358,27 +362,13 @@ function bezierAnimation(duration, bezierTimingFunction, handlers, delay, playNu
                 return this;
             }
         }
-        //if (isRunning && playCount == 0) return this;
-
-        console.log("重新开始");
         if (isDone) isDone = false;
         isRunning = true;
 
         function playCurrFrame() {
-            /*
-            progress=(passedTime+Date.now()-startTime)/(duration*1000);
-            if(progress>=1){
-              progress=1;
-            }
-            */
             frameHandler.execute(param, timingFunction).then(function() {
                 playNext();
             })
-            /*
-            frameHandler.execute(progress.toFixed(6),timingFunction.solve(progress).toFixed(6)).then(function(){
-              playNext();
-            })
-            */
         }
 
         function done() {
@@ -392,7 +382,6 @@ function bezierAnimation(duration, bezierTimingFunction, handlers, delay, playNu
             for (var i = 0, count = endCb.length; i < count; i++) {
                 endCb[i]();
             }
-
         }
         var self = this;
 
@@ -440,6 +429,7 @@ function bezierAnimation(duration, bezierTimingFunction, handlers, delay, playNu
         param.passedTime = param.passedTime + (Date.now() - param.startTime);
         param.startTime = 0;
         isRunning = false;
+        frameHandler.cancelRaf();
     }
     this.getStatus = function() {
         if (isRunning) {
@@ -466,6 +456,8 @@ function bezierAnimation(duration, bezierTimingFunction, handlers, delay, playNu
  */
 function createBezier(cubicBezierTiming) {
     if (typeof cubicBezierTiming === 'string') {
+        console.log(bezier[cubicBezierTiming]);
+        window[cubicBezierTiming]=bezier[cubicBezierTiming];
         if (bezier[cubicBezierTiming]) {
             return bezier[cubicBezierTiming];
         }
@@ -477,6 +469,7 @@ function createBezier(cubicBezierTiming) {
     } else if (typeof cubicBezierTiming === 'function' && cubicBezierTiming instanceof bezier) {
         return cubicBezierTiming;
     }
+
 
 }
 module.exports = bezierAnimation;
