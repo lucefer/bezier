@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../dist/bezier-animation.js"></script>
+  <style type="text/css">
+  body{
+    background: #000;
+    color:#FFF;
+  }
+  .ball{
+    width:50px;
+    height:50px;
+    background: #fff;
+    border-radius: 100%;
+  }
+  </style>
+</head>
+<body>
+  <div id="ball011" class="ball"></div>
+  <script>
+  var ani=new bezierAnimation(1,[0.25,-0.5,0.25,1],function(i1,i2){
+    document.querySelector("#ball011").style.transform="translateX("+i2*200+"px)";
+  })
+  ani.play();
+  </script>
+
+</body>
+</html>
