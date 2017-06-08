@@ -156,8 +156,6 @@ function bezierAnimation(duration, bezierTimingFunction, handlers, delay, playNu
  */
 function createBezier(cubicBezierTiming) {
     if (typeof cubicBezierTiming === 'string') {
-        console.log(bezier[cubicBezierTiming]);
-        window[cubicBezierTiming]=bezier[cubicBezierTiming];
         if (bezier[cubicBezierTiming]) {
             return bezier[cubicBezierTiming];
         }
@@ -165,7 +163,7 @@ function createBezier(cubicBezierTiming) {
         return;
     } else if (Object.prototype.toString.call(cubicBezierTiming) === '[object Array]' && cubicBezierTiming.length === 4) {
         return new bezier(cubicBezierTiming[0], cubicBezierTiming[1], cubicBezierTiming[2], cubicBezierTiming[3]);
-        console.error("贝塞尔参数应为四个介于【0，1】之间的数值");
+        //console.error("贝塞尔参数应为四个介于【0，1】之间的数值");
     } else if (typeof cubicBezierTiming === 'function' && cubicBezierTiming instanceof bezier) {
         return cubicBezierTiming;
     }

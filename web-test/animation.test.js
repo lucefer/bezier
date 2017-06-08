@@ -8643,10 +8643,11 @@ function createBezier(cubicBezierTiming) {
         return;
     } else if (Object.prototype.toString.call(cubicBezierTiming) === '[object Array]' && cubicBezierTiming.length === 4) {
         return new bezier(cubicBezierTiming[0], cubicBezierTiming[1], cubicBezierTiming[2], cubicBezierTiming[3]);
-        console.error("贝塞尔参数应为四个介于【0，1】之间的数值");
+        //console.error("贝塞尔参数应为四个介于【0，1】之间的数值");
     } else if (typeof cubicBezierTiming === 'function' && cubicBezierTiming instanceof bezier) {
         return cubicBezierTiming;
     }
+
 
 }
 module.exports = bezierAnimation;
@@ -8742,9 +8743,7 @@ var raf=__webpack_require__(12)
 function Frame(cb){
   var timer=null;
   this.execute=function(param,timingFunction){
-    ///console.log("args",args);
     timer=raf(function(){
-
       param.progress=(param.passedTime+Date.now()-(!param.startTime?Date.now():param.startTime))/(param.duration*1000);
       if(param.progress>=1){
         param.progress=1;
